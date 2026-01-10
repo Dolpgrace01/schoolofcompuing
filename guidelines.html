@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equity Crew 26 | Administrative Hub</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Light Mode (Default) */
+            --bg-gradient: radial-gradient(circle at top, #064e3b, #022c22);
+            --primary-green: #10b981;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-gold: #f39c12;
+            --danger-red: #ef4444;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --modal-overlay: rgba(0, 0, 0, 0.9);
+        }
+
+        [data-theme="dark"] {
+            /* Ultra Dark Mode */
+            --bg-gradient: radial-gradient(circle at top, #020617, #000000);
+            --glass-bg: rgba(30, 41, 59, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            transition: background 0.5s ease;
+        }
+
+        /* --- Navigation Bar --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 20px; }
+        .home-btn { 
+            text-decoration: none; color: var(--text-main); font-weight: 600; 
+            font-size: 0.9rem; display: flex; align-items: center; gap: 8px;
+            padding: 8px 15px; border-radius: 10px; background: var(--glass-bg);
+            border: 1px solid var(--glass-border); transition: 0.3s;
+        }
+        .home-btn:hover { background: var(--primary-green); border-color: var(--primary-green); }
+
+        .theme-toggle {
+            cursor: pointer; font-size: 1.2rem; color: var(--accent-gold);
+            background: none; border: none; transition: 0.3s;
+        }
+
+        /* --- Main Content --- */
+        .container { padding: 40px 8% 100px; }
+
+        .section-header {
+            margin: 60px 0 30px; display: flex; align-items: center; gap: 15px;
+        }
+        .section-header h2 { font-size: 1.4rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+        .section-header .line { flex-grow: 1; height: 1px; background: var(--glass-border); }
+
+        .grid-wrapper { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+
+        .card {
+            background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 30px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .card:hover { transform: translateY(-8px); border-color: var(--primary-green); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+        .card h3 { font-size: 1.2rem; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
+        .card h3 i { color: var(--primary-green); }
+        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; }
+        .card a { text-decoration: none; color: var(--primary-green); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer;}
+
+        /* --- Footer --- */
+        .footer {
+            margin-top: 50px; padding: 40px 8%; text-align: center;
+            border-top: 1px solid var(--glass-border); background: rgba(0,0,0,0.1);
+        }
+        .footer p { font-size: 0.85rem; color: var(--text-muted); letter-spacing: 1px; }
+        .footer b { color: var(--primary-green); }
+
+        /* --- Modal Styles (Unchanged but dark-mode compatible) --- */
+        .modal {
+            display: none; position: fixed; inset: 0; background: var(--modal-overlay);
+            backdrop-filter: blur(15px); z-index: 2000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content {
+            background: #020617; border: 1px solid var(--primary-green);
+            width: 100%; max-width: 850px; max-height: 85vh; border-radius: 32px;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .modal-header { padding: 25px 40px; background: rgba(16, 185, 129, 0.1); border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; }
+        .search-bar { width: calc(100% - 80px); padding: 12px 45px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; color: white; outline: none; margin: 20px 40px; }
+        .rules-list { padding: 0 40px 40px; overflow-y: auto; }
+        .rule-card { padding: 15px; margin-bottom: 10px; background: rgba(255,255,255,0.02); border-radius: 12px; border-left: 3px solid var(--primary-green); }
+        .close-btn { font-size: 2rem; cursor: pointer; color: #fff; }
+    </style>
+</head>
+<body data-theme="light">
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="home-btn"><i class="fas fa-home"></i> Home</a>
+            <h1 style="font-size: 1.2rem; font-weight: 800; margin: 0;">EQUITY <span style="color:var(--primary-green)">HUB</span></h1>
+        </div>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <div class="container">
+        <div class="section-header">
+            <h2 style="color: var(--primary-green);">Parliamentary Governance</h2>
+            <div class="line"></div>
+        </div>
+        
+        <div class="grid-wrapper">
+            <div class="card" style="border-color: var(--primary-green);">
+                <h3><i class="fas fa-gavel"></i> Parliamentary Rules</h3>
+                <p>The 100 Official Statutes and Standing Orders governing the Student Parliament.</p>
+                <a onclick="toggleModal(true)">Open Rulebook →</a>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-bullhorn"></i> Memo Release</h3>
+                <p>Official administrative updates and directives from the Secretariat.</p>
+                <a href="memo.html">View Memos →</a>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-users-cog"></i> EXCO Portal</h3>
+                <p>Confidential agenda and session minutes for the Executive Council.</p>
+                <a href="#">Secure Access →</a>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2 style="color: var(--accent-gold);">Financials & Services</h2>
+            <div class="line"></div>
+        </div>
+
+        <div class="grid-wrapper">
+            <div class="card" style="border-color: var(--accent-gold);">
+                <h3><i class="fas fa-money-bill-wave"></i> Dues Deadline</h3>
+                <p>Avoid a ₦2,500 fine. Ensure your dues are settled before the 15th of next month.</p>
+                <a href="dues.html" style="color: var(--accent-gold);">Pay Now →</a>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-folder-open"></i> Digital Library</h3>
+                <p>High-quality lecture notes and a database of past examination questions.</p>
+                <a href="library.html">Browse Files →</a>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-file-signature"></i> Request Center</h3>
+                <p>Apply for Student IDs, clearance letters, and other official documentation.</p>
+                <a href="request.html">Apply Now →</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Equity Crew 26. All Rights Reserved.</p>
+        <p style="margin-top: 10px;">Developed by <b>DolpGrace</b></p>
+    </footer>
+
+    <div id="ruleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-scroll"></i> Parliamentary Rulebook</h2>
+                <span class="close-btn" onclick="toggleModal(false)">&times;</span>
+            </div>
+            <input type="text" id="ruleSearch" class="search-bar" placeholder="Search statutes..." onkeyup="filterRules()">
+            <div class="rules-list" id="rulesInjection"></div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Logic
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.querySelector('#themeToggle i');
+            const currentTheme = body.getAttribute('data-theme');
+            
+            if (currentTheme === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.setAttribute('data-theme', 'light');
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Keep theme on reload
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            document.querySelector('#themeToggle i').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        };
+
+        // Modal Rules (Condensed for brevity)
+        const rules = [{ cat: "Authority", text: "The Mace is the only symbol of authority." }];
+        for(let i = 2; i <= 100; i++) {
+            rules.push({ cat: "Statute", text: `Parliamentary Rule #${i}: Governance protocol for honorable members regarding session conduct.` });
+        }
+
+        function toggleModal(show) {
+            const modal = document.getElementById('ruleModal');
+            if (show) {
+                renderRules(rules);
+                modal.style.display = 'flex';
+            } else {
+                modal.style.display = 'none';
+            }
+        }
+
+        function renderRules(data) {
+            const container = document.getElementById('rulesInjection');
+            container.innerHTML = data.map((r, i) => `
+                <div class="rule-card">
+                    <span style="font-size:0.6rem; color:var(--primary-green); font-weight:800;">${r.cat}</span>
+                    <div style="display:flex; gap:10px; margin-top:5px;">
+                        <b>${i+1}.</b> <span>${r.text}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterRules() {
+            const query = document.getElementById('ruleSearch').value.toLowerCase();
+            const filtered = rules.filter(r => r.text.toLowerCase().includes(query));
+            renderRules(filtered);
+        }
+
+        window.onclick = (e) => { if (e.target.className === 'modal') toggleModal(false); }
+    </script>
+</body>
+</html>

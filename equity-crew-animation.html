@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Executive Board | Poppins Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-overlay: rgba(6, 78, 59, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #ffffff;
+            --emerald: #10b981;
+            --deep-green: #064e3b;
+            --footer-bg: #064e3b;
+        }
+
+        [data-theme="light"] {
+            --bg-overlay: rgba(240, 253, 244, 0.95);
+            --card-bg: #ffffff;
+            --text-main: #064e3b;
+            --emerald: #059669;
+            --footer-bg: #ffffff;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif; /* Applied Poppins */
+            transition: all 0.3s ease;
+        }
+
+        .page-container {
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
+                        url('https://images.unsplash.com/photo-1541339907198-e08756ebafe3?auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
+        }
+
+        /* Controls Area */
+        .controls { position: absolute; top: 30px; left: 30px; display: flex; gap: 10px; z-index: 1000; }
+        
+        .btn-ui {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            border: 1px solid var(--emerald);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .btn-ui:hover { background: var(--emerald); color: white; }
+
+        /* Gallery Structure */
+        .gallery-container {
+            position: relative;
+            width: 95%;
+            max-width: 1250px;
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .gallery-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .faculty-gallery {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 40px 10px;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .faculty-gallery::-webkit-scrollbar { display: none; }
+
+        .member-card {
+            flex: 0 0 280px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 35px 20px;
+            text-align: center;
+            scroll-snap-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .member-card:hover { transform: translateY(-10px); }
+
+        .member-image { 
+            width: 120px; height: 120px; 
+            border-radius: 20px; /* Slightly squared for modern look */
+            object-fit: cover;
+            border: 4px solid var(--emerald); 
+            margin-bottom: 20px; 
+        }
+
+        .member-name { color: var(--deep-green); font-size: 1.15rem; font-weight: 700; margin: 0; }
+        .member-role { color: var(--emerald); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Scroll Navigation */
+        .scroll-arrow {
+            background: var(--card-bg);
+            color: var(--deep-green);
+            border: none;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+        .scroll-arrow:hover { background: var(--deep-green); color: white; }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--emerald);
+            width: 11%; /* Default for 1/9 members */
+            transition: width 0.3s ease;
+        }
+
+        /* Help Desk */
+        .help-desk { position: fixed; bottom: 30px; right: 30px; background: var(--deep-green); color: white; padding: 15px 25px; border-radius: 15px; z-index: 2000; border: 1px solid var(--emerald); cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        footer { background: var(--footer-bg); color: var(--text-main); text-align: center; padding: 30px 0; width: 100%; font-size: 0.85rem; border-top: 1px solid rgba(16, 185, 129, 0.3); }
+
+        @media (max-width: 768px) { .scroll-arrow { display: none; } }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div class="page-container">
+        <div class="controls">
+            <a href="index.html" class="btn-ui">Home</a>
+            <button class="btn-ui" onclick="toggleTheme()" id="themeIcon">☀️ LIGHT</button>
+        </div>
+
+        <div style="text-align: center; color: var(--text-main); margin-top: 100px; padding: 0 20px;">
+            <h1 style="font-weight: 700; letter-spacing: -1px; margin-bottom: 5px;">Faculty Executive Board</h1>
+            <p style="opacity: 0.8; font-weight: 300;">Governing officials of the 2026 academic session</p>
+        </div>
+
+        <div class="gallery-container">
+            <div class="gallery-row">
+                <button class="scroll-arrow" onclick="scrollGallery(-1)">&#8592;</button>
+                
+                <div class="faculty-gallery" id="gallery" onscroll="updateProgress()">
+                    <div class="member-card"><img src="https://i.pravatar.cc/150?u=a1" class="member-image"><p class="member-role">Dean</p><h3 class="member-name">Dr. Sarah Jenkins</h3></div>
+                    <div class="member-card"><img src="https://i.pravatar.cc/150?u=a2" class="member-image"><p class="member-role">Vice Dean</p><h3 class="member-name">Prof. Michael Chen</h3></div>
+                    <div class="member-card"><img src="https://i.pravatar.cc/150?u=a3" class="member-image"><p class="member-role">Registrar</p><h3 class="member-name">Elena Rodriguez</h3></div>
+                    <div class="member-card"><img src="https://i.pravatar.cc/150?u=a4" class="member-image"><p class="member-role">Research Head</p><h3 class="member-name">Dr. James Wilson</h3></div>
+                    <div class="member-card"><img src="https://i.pravatar.cc/150?u=a5" class="member-image"><p class="member-role">Secretary</p><h3 class="member-name">Linda Thompson</h3></div>
+                    <div class="member-card"><img src="https://i.pravatar.cc/150?u=a6" class="member-image"><p class="member-role">Bursar</p><h3 class="member-name">Prof. David Kalu</h3></div>
+                    <div class="member-card"><img src="https://i.pravatar.cc/150?u=a7" class="member-image"><p class="member-role">PRO</p><h3 class="member-name">Dr. Amara Okafor</h3></div>
+                    <div class="member-card"><img src="https://i.pravatar.cc/150?u=a8" class="member-image"><p class="member-role">Welfare</p><h3 class="member-name">Engr. Sam Ade</h3></div>
+                    <div class="member-card"><img src="https://i.pravatar.cc/150?u=a9" class="member-image"><p class="member-role">Legal Adviserr</p><h3 class="member-name">Barr. Jane Doe</h3></div>
+                </div>
+
+                <button class="scroll-arrow" onclick="scrollGallery(1)">&#8594;</button>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <a href="javascript:history.back()" class="btn-ui" style="margin-top: 40px; background: var(--emerald); color: white; border: none;">Go Back</a>
+    </div>
+
+    <div class="help-desk" onclick="alert('Opening Scheduling Portal...')">
+        <div style="width: 10px; height: 10px; background: #22c55e; border-radius: 50%;"></div>
+        GEN SEC LIVE DESK
+    </div>
+
+    <div style="display: none;" class="modal-overlay" id="modalOverlay" onclick="toggleBox(true)">
+        <div class="gen-sec-box" onclick="event.stopPropagation()">
+            <div class="box-header">
+                <h2 style="margin:0; font-size: 1.2rem;">Gen Sec Live Portal</h2>
+                <p style="margin:5px 0 0; font-size:0.8rem; opacity:0.8;">How can we assist you today?</p>
+            </div>
+            
+            <div class="box-content">
+                <a href="#" class="help-option">Schedule a Meeting</a>
+                <a href="#" class="help-option">Request Information</a>
+                <a href="#" class="help-option">Report an Issue</a>
+                <a href="#" class="help-option">Other Inquiries</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Developed by <span style="color: var(--emerald); font-weight: 700;">Dolpgrace</span> &copy; 2026</p>
+    </footer>
+
+
+    <script>
+        function toggleBox(show) {
+            const overlay = document.getElementById('modalOverlay');
+            overlay.style.display = show ? 'flex' : 'none';
+        }
+    </script>
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                icon.innerHTML = '🌙 DARK';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.innerHTML = '☀️ LIGHT';
+            }
+        }
+
+        function scrollGallery(direction) {
+            const gallery = document.getElementById('gallery');
+            gallery.scrollBy({ left: direction * 300, behavior: 'smooth' });
+        }
+
+        function updateProgress() {
+            const gallery = document.getElementById('gallery');
+            const progressBar = document.getElementById('progressBar');
+            const scrollPercent = (gallery.scrollLeft / (gallery.scrollWidth - gallery.clientWidth)) * 100;
+            progressBar.style.width = Math.max(11, scrollPercent) + "%";
+        }
+    </script>
+</body>
+</html>

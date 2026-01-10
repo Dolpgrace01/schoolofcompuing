@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Rules | Equity Crew 26 Sports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Oswald:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-green: #10b981;
+            --deep-emerald: #064e3b;
+            --dark-void: #020617;
+            --glass: rgba(0, 0, 0, 0.75);
+            --gold: #fbbf24;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: url(theirbg.jpg); /* Professional football field backdrop */
+            background-attachment: fixed;
+            
+            background-position: center;
+            color: #fff; margin: 0; scroll-behavior: smooth; 
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: url(thebg.jpg.crdownload); /* Background: Nigeria National Team */
+            background-size: cover;
+            background-position: center;
+            border-bottom: 4px solid var(--neon-green);
+        }
+
+        .hero h1 { font-family: 'Oswald'; font-size: 5rem; margin: 0; text-transform: uppercase; letter-spacing: 5px; }
+        .hero p { font-size: 1.2rem; letter-spacing: 3px; color: var(--neon-green); font-weight: 700; }
+
+        .container { width: 90%; max-width: 1100px; margin: -100px auto 100px; position: relative; z-index: 2; }
+
+        /* --- STARS SECTION --- */
+        .stars-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        .star-card {
+            background: var(--glass);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--neon-green);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+        .star-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3); }
+        .star-card img { width: 100%; height: 250px; object-fit: cover; border-bottom: 3px solid var(--neon-green); }
+        .star-card h3 { font-family: 'Oswald'; margin: 15px 0 5px; color: var(--gold); }
+        .star-card p { font-size: 0.8rem; margin-bottom: 15px; opacity: 0.8; }
+
+        /* --- RULES CONTENT --- */
+        .rules-paper {
+            background: var(--glass);
+            padding: 60px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+        }
+        .rules-paper h2 { font-family: 'Oswald'; color: var(--neon-green); font-size: 2.5rem; border-bottom: 1px solid var(--neon-green); padding-bottom: 10px; margin-bottom: 30px; }
+        
+        .rule-item { margin-bottom: 30px; display: flex; gap: 20px; }
+        .rule-num { 
+            background: var(--neon-green); color: #000; width: 40px; height: 40px; 
+            display: flex; align-items: center; justify-content: center; 
+            border-radius: 50%; font-weight: 900; flex-shrink: 0;
+        }
+        .rule-text h4 { margin: 0 0 10px; font-family: 'Oswald'; font-size: 1.4rem; color: #fff; }
+        .rule-text p { margin: 0; line-height: 1.6; color: #ccc; }
+
+        /* --- NAV & FOOTER --- */
+        .nav-bar { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); }
+        .nav-bar a { color: #fff; text-decoration: none; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; }
+
+        footer { text-align: center; padding: 50px; background: #000; color: #555; font-size: 0.8rem; border-top: 1px solid #222; }
+
+        @media (max-width: 768px) {
+            .stars-container { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
+            .rules-paper { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <div style="font-family: 'Oswald'; font-weight: 800; font-size: 1.2rem;">EQUITY <span style="color:var(--neon-green)">SPORTS</span></div>
+        <a href="index.html"><i class="fas fa-arrow-left"></i> BACK TO HUB</a>
+    </nav>
+
+    <div class="hero">
+        <h1>HOUSE <span style="color:var(--neon-green)">RULES</span></h1>
+        <p>THE CONSTITUTION OF ATHLETIC EXCELLENCE</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="stars-container">
+            <div class="star-card">
+                <img src="osimhen.jpeg" alt="Victor Osimhen">
+                <h3>VICTOR OSIMHEN</h3>
+                <p>Resilience • Power • Precision</p>
+            </div>
+            <div class="star-card">
+                <img src="Ademola-Lookman.jpeg" alt="Ademola Lookman">
+                <h3>ADEMOLA LOOKMAN</h3>
+                <p>Speed • Skill • Vision</p>
+            </div>
+            <div class="star-card">
+                <img src="William-Troost-Ekong-1536x1024.jpg">
+                <h3>TROOST-EKONG</h3>
+                <p>Leadership • Strength • Honor</p>
+            </div>
+        </div>
+
+        <div class="rules-paper">
+            <h2>STATUTES & REGULATIONS</h2>
+
+            <div class="rule-item">
+                <div class="rule-num">01</div>
+                <div class="rule-text">
+                    <h4>Eligibility & Registration</h4>
+                    <p>Only verified students of the department with a valid matriculation number are eligible to compete. All athletes must be registered in the official Sports Center database before matchday.</p>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">02</div>
+                <div class="rule-text">
+                    <h4>Punctuality & Attendance</h4>
+                    <p>Teams must arrive at the venue at least 30 minutes before kickoff. A 15-minute grace period is allowed, after which a walk-over will be declared in favor of the present team.</p>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">03</div>
+                <div class="rule-text">
+                    <h4>Fair Play & Decorum</h4>
+                    <p>Unparliamentary language, physical violence, or intimidation of match officials will result in immediate disqualification and possible suspension from all Equity Crew 26 sporting events.</p>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">04</div>
+                <div class="rule-text">
+                    <h4>Official Kits & Equipment</h4>
+                    <p>All players must wear their approved departmental jerseys. Shin guards are mandatory for football matches for player safety. No player will be allowed on the pitch without proper gear.</p>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">05</div>
+                <div class="rule-text">
+                    <h4>E-Sports (FIFA 26) Guidelines</h4>
+                    <p>Standard tournament settings apply: 6-minute halves, Tactical Defending, and World Class difficulty. Any form of 'time-wasting' (passing in the back for more than 5 in-game minutes) is prohibited.</p>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">06</div>
+                <div class="rule-text" style="color: var(--gold);">
+                    <h4>Protests & Appeals</h4>
+                    <p>Any grievance regarding match results or officiating must be submitted in writing to the Sports Director within 2 hours of match completion.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Equity Crew 26 Sports Committee. <br>
+        Inspired by the Spirit of the Super Eagles.
+    </footer>
+
+</body>
+</html>

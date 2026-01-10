@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office of the General Secretary | 2026 Hub</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-green: #04241c;
+            --forest: #064e3b;
+            --emerald: #10b981;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --pure-white: #ffffff;
+            --black: #000000;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { background-color: var(--deep-green); color: var(--pure-white); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; }
+
+        .action-bar { padding: 30px; display: flex; justify-content: space-between; max-width: 1100px; margin: 0 auto; align-items: center; }
+        .nav-pill { background: var(--black); border: 1px solid var(--emerald); color: white; padding: 10px 22px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; transition: var(--transition); }
+        .nav-pill:hover { background: var(--emerald); color: var(--black); box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+
+        .wide-container { max-width: 1100px; margin: 0 auto 40px; padding: 0 20px; }
+
+        /* --- Executive Profile --- */
+        .executive-box { background: linear-gradient(145deg, var(--forest), var(--deep-green)); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 32px; display: flex; align-items: center; padding: 50px; gap: 50px; margin-bottom: 50px; }
+        .ornate-frame { width: 260px; height: 340px; background: var(--black); border: 8px solid var(--black); outline: 2px solid var(--emerald); overflow: hidden; position: relative; flex-shrink: 0; cursor: pointer; transition: var(--transition); border-radius: 4px; }
+        .image-overlay { position: absolute; inset: 0; background: repeating-linear-gradient(45deg, #04241c, #04241c 10px, #000 10px, #000 20px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.5s; }
+        .overlay-lifted { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        .profile-img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease; }
+        .image-revealed { opacity: 1 !important; }
+
+        /* --- Forms & Portals --- */
+        .portal-toggle { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 35px; }
+        .option-card { background: var(--card-bg); border: 1px solid rgba(16, 185, 129, 0.1); padding: 25px; border-radius: 20px; cursor: pointer; text-align: center; transition: var(--transition); }
+        .option-card.active { border-color: var(--emerald); background: rgba(16, 185, 129, 0.12); transform: translateY(-5px); }
+        .request-form { background: var(--card-bg); padding: 45px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.05); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
+        label { display: block; font-size: 0.75rem; color: var(--emerald); text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+        input, textarea { width: 100%; padding: 16px; background: var(--black); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; color: white; box-sizing: border-box; }
+        .btn-submit { width: 100%; padding: 20px; background: var(--emerald); color: var(--deep-green); border: none; border-radius: 14px; font-weight: 800; cursor: pointer; margin-top: 25px; }
+
+        /* --- NEW: Legislative Repository Section --- */
+        .legislative-section { background: rgba(255, 255, 255, 0.02); padding: 40px; border-radius: 28px; border: 1px solid rgba(16, 185, 129, 0.1); margin-top: 60px; }
+        .section-title { font-family: 'Playfair Display'; font-size: 1.8rem; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .section-title i { color: var(--emerald); }
+        
+        .download-card { background: var(--black); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px 30px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; transition: var(--transition); }
+        .download-card:hover { border-color: var(--emerald); background: rgba(16, 185, 129, 0.03); }
+        .file-info h4 { margin: 0; font-size: 1.05rem; }
+        .file-info p { margin: 5px 0 0; font-size: 0.8rem; opacity: 0.6; }
+        
+        .btn-download { background: transparent; border: 1px solid var(--emerald); color: var(--emerald); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .btn-download:hover { background: var(--emerald); color: var(--black); }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="action-bar">
+        <h2 style="font-family: 'Playfair Display'; margin:0; cursor: pointer;" onclick="location.reload()">EQUITY <span style="color:var(--emerald)">'26</span></h2>
+        <div class="nav-right-group" style="display: flex; gap:12px;">
+            <!-- <button onclick="switchView('student')" class="nav-pill"><i class="ph ph-student"></i> Back to Home</button> -->
+             <a href="index.html" style="color: white; text-decoration: none; padding: 10px; border-radius: 10px; font-size: small; background-color: #04241c; border: 1px solid white;"> Back to Home </a>
+            <button onclick="switchView('admin')" class="nav-pill"><i class="ph ph-shield-check"></i> Secretariat Vault</button>
+        </div>
+    </nav>
+
+    <main class="wide-container">
+        <header class="executive-box">
+            <div class="ornate-frame" onclick="requestImageAccess()">
+                <div id="imageLock" class="image-overlay">
+                    <i class="ph ph-lock-key" style="font-size: 2rem; color: var(--emerald); margin-bottom: 10px;"></i>
+                    <div style="color: var(--emerald); font-family: monospace; font-size: 0.7rem; font-weight: bold;">CLICK TO UNLOCK</div>
+                </div>
+                <img src="newbg.JPG" alt="GS" class="profile-img" id="secret-img">
+            </div>
+            <div class="info-side">
+                <span style="color:var(--emerald); text-transform:uppercase; font-size:0.75rem; letter-spacing:3px; font-weight:700;">Administrative Head</span>
+                <h1 style="font-family:'Playfair Display'; font-size:2.5rem; margin:10px 0;">Office of the General Secretary</h1>
+                <h2 style="color: var(--emerald); font-weight: 400;">Comr. Obidare Ibrahim Boluwatife</h2>
+                <p style="opacity: 0.7; max-width: 600px;">Ensuring institutional integrity and administrative excellence for the 2026 Academic Session.</p>
+            </div>
+        </header>
+
+        <section id="studentPortal">
+            <div class="portal-toggle">
+                <div class="option-card active" onclick="setDoc('Introductory Letter', this)">
+                    <i class="ph ph-envelope-open"></i>
+                    <div>Introductory Letter</div>
+                </div>
+                <div class="option-card" onclick="setDoc('Proficiency Cert', this)">
+                    <i class="ph ph-certificate"></i>
+                    <div>Proficiency Cert</div>
+                </div>
+                <div class="option-card" onclick="setDoc('General Request', this)">
+                    <i class="ph ph-file-text"></i>
+                    <div>General Request</div>
+                </div>
+            </div>
+
+            <form class="request-form" id="mainForm">
+                <input type="hidden" id="selectedType" value="Introductory Letter">
+                <div class="form-grid">
+                    <div><label>Full Name</label><input type="text" id="sName" placeholder="Legal Name" required></div>
+                    <div><label>Matric No</label><input type="text" id="sMatric" placeholder="SW2026/..." required></div>
+                </div>
+                <div id="introBox" style="display: block; margin-top:20px;">
+                    <label>Addressed To (Organization & Address)</label>
+                    <textarea id="sAddress" rows="4" placeholder="To: The Manager..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Submit Official Request</button>
+            </form>
+        </section>
+
+        <section id="adminPortal" class="hidden">
+            <div id="adminTable"></div>
+        </section>
+
+        <section class="legislative-section">
+            <div class="section-title">
+                <i class="ph ph-books"></i>
+                <span>Legislative Repository</span>
+            </div>
+
+            <div class="download-card">
+                <div class="file-info">
+                    <h4>Constitution Draft (2026 Version)</h4>
+                    <p>PDF Document • 2.4 MB • Official Governing Protocols</p>
+                </div>
+                <button class="btn-download" onclick="downloadFile('Constitution_Draft_2026.pdf')">
+                    <i class="ph ph-download-simple"></i> Download
+                </button>
+            </div>
+
+            <div class="download-card">
+                <div class="file-info">
+                    <h4>Electoral Guidelines 2026</h4>
+                    <p>PDF Document • 1.1 MB • Voting Procedures & Requirements</p>
+                </div>
+                <button class="btn-download" onclick="downloadFile('Electoral_Guidelines.pdf')">
+                    <i class="ph ph-download-simple"></i> Download
+                </button>
+            </div>
+            </section>
+    
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Constitution Draft (2026 Version)</h4>
+            <p>PDF Document • Official Governing Protocols & Student Rights</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Constitution_Draft_2026.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Electoral Guidelines 2026</h4>
+            <p>PDF Document • Voting Procedures & Aspirant Requirements</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Electoral_Guidelines.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Q1 Financial Statement</h4>
+            <p>PDF Document • Detailed Revenue & Expenditure Breakdown</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Q1_Financial_Statement.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Judicial Standing Orders</h4>
+            <p>PDF Document • Legal Framework for Dispute Resolutions</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Judicial_Standing_Orders.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Senate Session Minutes (Jan 2026)</h4>
+            <p>PDF Document • Resolutions from the 14th Assembly</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Senate_Minutes_Jan.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Welfare & Health Policy</h4>
+            <p>PDF Document • Guidelines for Student Support & Medical Aid</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Student_Welfare_Policy.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Excellence Roadmap</h4>
+            <p>PDF Document • Study Resources & Tutorial Schedules</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Academic_Roadmap.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Student Code of Conduct</h4>
+            <p>PDF Document • Rules of Engagement & Disciplinary Measures</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Code_of_Conduct.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Dues & Levy Schedule</h4>
+            <p>PDF Document • Official Fees for the 2026 Session</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Dues_Schedule_2026.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Sports & Social Calendar</h4>
+            <p>PDF Document • Timetable for Inter-Level Games & Galas</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Sports_Calendar.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+    <div class="download-card">
+        <div class="file-info">
+            <h4>Secretariat Roadmap 2026</h4>
+            <p>PDF Document • Yearly Administrative Goals & Targets</p>
+        </div>
+        <button class="btn-download" onclick="downloadFile('Secretariat_Roadmap.pdf')">
+            <i class="ph ph-download-simple"></i> Download
+        </button>
+    </div>
+
+            <div class="download-card">
+                <div class="file-info">
+                    <h4>Secretariat Yearly Roadmap</h4>
+                    <p>PDF Document • 850 KB • Events & Administrative Deadlines</p>
+                </div>
+                <button class="btn-download" onclick="downloadFile('Roadmap_2026.pdf')">
+                    <i class="ph ph-download-simple"></i> Download
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Password for both is 1234
+        function switchView(view) {
+            if(view === 'admin') {
+                const pass = prompt("Enter Gen Sec Access Key:");
+                if(pass === "DolapoAdmin") {
+                    document.getElementById('studentPortal').classList.add('hidden');
+                    document.getElementById('adminPortal').classList.remove('hidden');
+                    loadAdminData();
+                } else if (pass !== null) { alert("You cant access this page."); }
+            } else {
+                document.getElementById('studentPortal').classList.remove('hidden');
+                document.getElementById('adminPortal').classList.add('hidden');
+            }
+        }
+
+        function requestImageAccess() {
+            if(document.getElementById('secret-img').classList.contains('image-revealed')) return;
+            const password = prompt("Subscription Password Required:");
+            if (password === "DolapoAdmin") {
+                document.getElementById('imageLock').classList.add('overlay-lifted');
+                document.getElementById('secret-img').classList.add('image-revealed');
+            } else if (password !== null) { alert("Access Denied."); }
+        }
+
+        function setDoc(type, el) {
+            document.getElementById('selectedType').value = type;
+            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('introBox').style.display = (type === 'Introductory Letter') ? 'block' : 'none';
+        }
+
+        document.getElementById('mainForm').onsubmit = function(e) {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('sName').value,
+                matric: document.getElementById('sMatric').value,
+                type: document.getElementById('selectedType').value,
+                address: document.getElementById('sAddress').value,
+                date: new Date().toLocaleDateString()
+            };
+            let db = JSON.parse(localStorage.getItem('secretariat_db') || '[]');
+            db.push(data);
+            localStorage.setItem('secretariat_db', JSON.stringify(db));
+            alert("Request Filed Successfully!");
+            this.reset();
+        };
+
+        function loadAdminData() {
+            const db = JSON.parse(localStorage.getItem('secretariat_db') || '[]');
+            const container = document.getElementById('adminTable');
+            container.innerHTML = db.length === 0 ? "<p style='text-align:center; opacity:0.5;'>No student requests found.</p>" : 
+                db.map(req => `<div style="background:rgba(255,255,255,0.02); padding:20px; border-radius:15px; margin-bottom:10px; border-left:4px solid var(--emerald);">
+                    <h4 style="margin:0">${req.name} (${req.matric})</h4>
+                    <p style="margin:5px 0; font-size:0.85rem; color:var(--emerald)">${req.type} | ${req.date}</p>
+                </div>`).join('');
+        }
+
+        // Handle PDF Downloads
+        function downloadFile(fileName) {
+            alert("Preparing download for: " + fileName + "\n(In a real server environment, this would trigger the file fetch.)");
+            // To make this real, you would use: window.location.href = '/files/' + fileName;
+        }
+    </script>
+</body>
+</html>

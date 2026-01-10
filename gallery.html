@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Gallery | Faculty Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #020617;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(212, 175, 55, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--dark-bg); color: #e2e8f0; }
+
+        /* Header & Admin */
+        .navbar { display: flex; justify-content: space-between; padding: 1rem 8%; background: #000; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .admin-panel { max-width: 800px; margin: 30px auto; padding: 25px; background: var(--glass); border-radius: 20px; border: 1px solid var(--border); text-align: center; }
+        .upload-btn { background: var(--gold); color: #000; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+
+        /* Gallery Grid */
+        .gallery-wrap { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+
+        .item { position: relative; border-radius: 20px; overflow: hidden; background: #000; border: 1px solid var(--border); aspect-ratio: 1/1; cursor: pointer; }
+        .item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .item:hover img { transform: scale(1.1); filter: brightness(0.4); }
+
+        /* AI Quote Lightbox */
+        .lightbox {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+            display: none; flex-direction: column; justify-content: center;
+            align-items: center; z-index: 2000; padding: 20px;
+        }
+        .lightbox.active { display: flex; }
+        .lb-content { position: relative; max-width: 600px; text-align: center; }
+        .lb-content img { width: 100%; border-radius: 15px; border: 1px solid var(--gold); margin-bottom: 20px; }
+        
+        .ai-quote-box {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 20px; border-radius: 15px; border-left: 4px solid var(--gold);
+            font-style: italic; color: #fff; position: relative;
+        }
+        .ai-badge {
+            position: absolute; top: -10px; left: 20px; background: var(--gold);
+            color: #000; font-size: 0.6rem; font-weight: 800; padding: 2px 8px; border-radius: 5px;
+        }
+
+        .close-box { position: absolute; top: -50px; right: 0; font-size: 2rem; color: white; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div style="font-family:'Cinzel'; color:var(--gold); font-size:1.2rem;">FACULTY AI ARCHIVE</div>
+        <a href="index.html" style="color:#fff; text-decoration:none;">Exit</a>
+    </nav>
+
+    <div class="admin-panel">
+        <h2 style="color:var(--gold); margin-bottom:10px;">Gen Sec Control</h2>
+        <button class="upload-btn" onclick="triggerSecureUpload()">+ ARCHIVE NEW MEMORY</button>
+        <input type="file" id="real-file" style="display:none" accept="image/*">
+    </div>
+
+    <div class="gallery-wrap">
+        <div class="grid" id="gallery-grid"></div>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lb-content">
+            <span class="close-box" onclick="closeLightbox()">&times;</span>
+            <img id="lb-img" src="">
+            <div class="ai-quote-box">
+                <span class="ai-badge">AI INSIGHT</span>
+                <p id="ai-quote-text">"Analyzing visual memory..."</p>
+            </div>
+            <button class="upload-btn" style="margin-top:20px; background:transparent; border:1px solid var(--gold); color:var(--gold);" onclick="downloadCurrent()">Download Image</button>
+        </div>
+    </div>
+
+    <script>
+        const MASTER_PASS = "DolapoAdmin";
+        const quotes = [
+            "Greatness is not just in the records we keep, but in the moments we share.",
+            "Innovation in this faculty starts with a single vision. This is a glimpse of that future.",
+            "Legacy is built one achievement at a time. Captured forever in our archive.",
+            "Unity is the cornerstone of our academic excellence. Together we lead.",
+            "Beyond the lectures and labs lies the heart of our student community.",
+            "A memory captured today becomes a masterpiece in the history of tomorrow."
+        ];
+
+        // --- CORE LOGIC ---
+        function triggerSecureUpload() {
+            if(prompt("Enter Gen Sec Password:") === MASTER_PASS) document.getElementById('real-file').click();
+            else alert("Unauthorized!");
+        }
+
+        document.getElementById('real-file').onchange = (e) => {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const id = Date.now();
+                    const src = event.target.result;
+                    const photos = JSON.parse(localStorage.getItem('ai_photos') || '[]');
+                    photos.push({id, src});
+                    localStorage.setItem('ai_photos', JSON.stringify(photos));
+                    renderPhoto(id, src);
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        function renderPhoto(id, src) {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `<img src="${src}">`;
+            div.onclick = () => openAILightbox(src);
+            document.getElementById('gallery-grid').prepend(div);
+        }
+
+        function openAILightbox(src) {
+            document.getElementById('lb-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+            
+            // "AI Generate" Quote based on a random index (simulating analysis)
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            const quoteEl = document.getElementById('ai-quote-text');
+            
+            quoteEl.innerText = "Analyzing memory...";
+            setTimeout(() => {
+                quoteEl.innerText = `"${randomQuote}"`;
+            }, 800);
+        }
+
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+
+        function downloadCurrent() {
+            const link = document.createElement('a');
+            link.href = document.getElementById('lb-img').src;
+            link.download = "Faculty_Archive_Memory.png";
+            link.click();
+        }
+
+        // Load existing
+        window.onload = () => {
+            const saved = JSON.parse(localStorage.getItem('ai_photos') || '[]');
+            saved.forEach(p => renderPhoto(p.id, p.src));
+        }
+    </script>
+</body>
+</html>
